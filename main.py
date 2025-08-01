@@ -1381,9 +1381,8 @@ async def txt_handler(bot: Client, m: Message):
         await bot.send_message(channel_id, f"<blockquote><b>🔅Successfully Done💞</b></blockquote>\n<blockquote><b>🔰Course : {b_name}</b></blockquote>\n<blockquote>🔗 Total Links: {len(links)} \n 🔸 Total Video : {video_count}\n  🔸 Total PDF : {pdf_count}\n</blockquote>\n")
     else:
         await bot.send_message(channel_id, f"<blockquote><b>🔅Successfully Done💞</b></blockquote>\n<blockquote><b>🔰Course : {b_name}</b></blockquote>\n<blockquote>🔗 Total Links: {len(links)} \n 🔸 Total Video : {video_count}\n  🔸 Total PDF : {pdf_count}\n</blockquote>\n")
-         await bot.send_message(m.chat.id, f"<blockquote><b>✅ Your Task is completed, please check your Set Channel📱</b></blockquote>")
-
-
+        await bot.send_message(m.chat.id, f"<blockquote><b>✅ Your Task is completed, please check your Set Channel📱</b></blockquote>")
+        
 @bot.on_message(filters.text & filters.private)
 async def text_handler(bot: Client, m: Message):
     if m.from_user.is_bot:

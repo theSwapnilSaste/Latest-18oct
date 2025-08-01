@@ -1170,13 +1170,13 @@ async def txt_handler(bot: Client, m: Message):
                     ccyt = f'[🎥]Vid Id : {str(count).zfill(3)}\n**Video Title :** `{v_name} .mp4`\n<a href="{url}">__**Click Here to Watch Stream**__</a>\n<blockquote><b>Batch Name : {b_name}\nTopic Name : {t_name}</b></blockquote>\n\n**Extracted by➤**{CR}\n'
                     ccm = f'[🎵]Mp3 Id : {str(count).zfill(3)}\n**Audio Title :** `{v_name} .mp3`\n<blockquote><b>Batch Name : {b_name}\nTopic Name : {t_name}</b></blockquote>\n\n**Extracted by➤**{CR}\n'
                 else:
-                    cc = f'[🎥]Vid Id : {str(count).zfill(3)}\n**Video Title :** `{name1} [{res}p] .mkv`\n<blockquote><b>Batch Name :</b> {b_name}</blockquote>\n\n**Extracted by➤**{CR}\n'
-                    cc1 = f'[📕]Pdf Id : {str(count).zfill(3)}\n**File Title :** `{name1} .pdf`\n<blockquote><b>Batch Name :</b> {b_name}</blockquote>\n\n**Extracted by➤**{CR}\n'
-                    cczip = f'[📁]Zip Id : {str(count).zfill(3)}\n**Zip Title :** `{name1} .zip`\n<blockquote><b>Batch Name :</b> {b_name}</blockquote>\n\n**Extracted by➤**{CR}\n' 
-                    ccimg = f'[🖼️]Img Id : {str(count).zfill(3)}\n**Img Title :** `{name1} .jpg`\n<blockquote><b>Batch Name :</b> {b_name}</blockquote>\n\n**Extracted by➤**{CR}\n'
-                    ccm = f'[🎵]Audio Id : {str(count).zfill(3)}\n**Audio Title :** `{name1} .mp3`\n<blockquote><b>Batch Name :</b> {b_name}</blockquote>\n\n**Extracted by➤**{CR}\n'
-                    cchtml = f'[🌐]Html Id : {str(count).zfill(3)}\n**Html Title :** `{name1} .html`\n<blockquote><b>Batch Name :</b> {b_name}</blockquote>\n\n**Extracted by➤**{CR}\n'
-                    
+                    cc = f'⛦vid Id : {str(count).zfill(3)}\n\n**Title :** {name1} \n\n<blockquote><b> 💠 Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
+                cc1 = f'⛦Pdf Id : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b> 💠 Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
+                cczip = f'⛦Zip Id : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b> 💠 Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n' 
+                ccimg = f'⛦Img Id : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b> 💠 Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
+                ccm = f'⛦Audio Id : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b> 💠 Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
+                cchtml = f'⛦Html Id : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b> 💠 Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
+    
                 if "drive" in url:
                     try:
                         ka = await helper.download(url, name)
@@ -1378,10 +1378,10 @@ async def txt_handler(bot: Client, m: Message):
     success_count = len(links) - failed_count
     video_count = v2_count + mpd_count + m3u8_count + yt_count + drm_count + zip_count + other_count
     if raw_text7 == "/d":
-        await bot.send_message(channel_id, f"<b>-┈━═.•°✅ Completed ✅°•.═━┈-</b>\n<blockquote><b>🎯Batch Name : {b_name}</b></blockquote>\n<blockquote>🔗 Total URLs: {len(links)} \n┃   ┠🔴 Total Failed URLs: {failed_count}\n┃   ┠🟢 Total Successful URLs: {success_count}\n┃   ┃   ┠🎥 Total Video URLs: {video_count}\n┃   ┃   ┠📄 Total PDF URLs: {pdf_count}\n┃   ┃   ┠📸 Total IMAGE URLs: {img_count}</blockquote>\n")
+        await bot.send_message(channel_id, f"<blockquote><b>🔅Successfully Done💞</b></blockquote>\n<blockquote><b>🔰Course : {b_name}</b></blockquote>\n<blockquote>🔗 Total Links: {len(links)} \n 🔸 Total Video : {video_count}\n  🔸 Total PDF : {pdf_count}\n</blockquote>\n")
     else:
-        await bot.send_message(channel_id, f"<b>-┈━═.•°✅ Completed ✅°•.═━┈-</b>\n<blockquote><b>🎯Batch Name : {b_name}</b></blockquote>\n<blockquote>🔗 Total URLs: {len(links)} \n┃   ┠🔴 Total Failed URLs: {failed_count}\n┃   ┠🟢 Total Successful URLs: {success_count}\n┃   ┃   ┠🎥 Total Video URLs: {video_count}\n┃   ┃   ┠📄 Total PDF URLs: {pdf_count}\n┃   ┃   ┠📸 Total IMAGE URLs: {img_count}</blockquote>\n")
-        await bot.send_message(m.chat.id, f"<blockquote><b>✅ Your Task is completed, please check your Set Channel📱</b></blockquote>")
+        await bot.send_message(channel_id, f"<blockquote><b>🔅Successfully Done💞</b></blockquote>\n<blockquote><b>🔰Course : {b_name}</b></blockquote>\n<blockquote>🔗 Total Links: {len(links)} \n 🔸 Total Video : {video_count}\n  🔸 Total PDF : {pdf_count}\n</blockquote>\n")
+         await bot.send_message(m.chat.id, f"<blockquote><b>✅ Your Task is completed, please check your Set Channel📱</b></blockquote>")
 
 
 @bot.on_message(filters.text & filters.private)

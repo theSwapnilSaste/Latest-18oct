@@ -1162,20 +1162,20 @@ async def txt_handler(bot: Client, m: Message):
                         t_name = "Untitled"
                         v_name = re.sub(r":.*", "", raw_title).strip()
                     
-                    cc = f'✮Vid Id : {str(count).zfill(3)}\n\n**Title :** {v_name}\n\n<blockquote><b>💠 Course : {b_name}</b></blockquote>\n<blockquote><b>🔸Topic : {t_name}</b></blockquote>\n\n**Downloaded By-**{CR}\n'
-                    cc1 = f'✮Pdf Id : {str(count).zfill(3)}\n\n**Title :** {v_name}\n\n<blockquote><b>💠 Course : {b_name}</b></blockquote>\n<blockquote><b>🔸Topic : {t_name}</b></blockquote>\n\n**Downloaded By-**{CR}\n'
-                    cczip = f'✮Zip Id : {str(count).zfill(3)}\n\n**Title :** {v_name}\n\n<blockquote><b>💠 Course : {b_name}</b></blockquote>\n<blockquote><b>🔸Topic : {t_name}</b></blockquote>\n\n**Downloaded By-**{CR}\n'
-                    ccimg = f'✮Img Id : {str(count).zfill(3)}\n\n**Title :** {v_name}\n\n<blockquote><b>💠 Course : {b_name}</b></blockquote>\n<blockquote><b>🔸Topic : {t_name}</b></blockquote>\n\n**Downloaded By-**{CR}\n'
-                    cchtml = f'✮Html Id : {str(count).zfill(3)}\n\n**Title :** {v_name}\n\n<blockquote><b>💠 Course : {b_name}</b></blockquote>\n<blockquote><b>🔸Topic : {t_name}</b></blockquote>\n\n**Downloaded By-**{CR}\n'
-                    ccyt = f'✮Vid Id : {str(count).zfill(3)}\n\n**Title :** {v_name}\n\n<a href="{url}">__**Click Here to Watch Stream**__</a>\n<blockquote><b>💠 Course : {b_name}</b></blockquote>\n<blockquote><b>🔸Topic : {t_name}</b></blockquote>\n\n**Downloaded By-**{CR}\n'
-                    ccm = f'✮Mp3 Id : {str(count).zfill(3)}\n\n**Title :** {v_name}\n\n<blockquote><b>💠 Course : {b_name}</b></blockquote>\n<blockquote><b>🔸Topic : {t_name}</b></blockquote>\n\n**Downloaded By-**{CR}\n'
+                    cc = f'.𖥔 ݁ ˖Vid Id.𖥔 ݁ ˖ : {str(count).zfill(3)}\n\n**Title :** {v_name}\n\n<blockquote><b>✘ Course : {b_name}</b></blockquote>\n<blockquote><b>✎ᝰ.Topic : {t_name}</b></blockquote>\n\n**Downloaded By-**{CR}\n'
+                    cc1 = f'.𖥔 ݁ ˖Pdf Id.𖥔 ݁ ˖ : {str(count).zfill(3)}\n\n**Title :** {v_name}\n\n<blockquote><b>✘ Course : {b_name}</b></blockquote>\n<blockquote><b>✎ᝰ.Topic : {t_name}</b></blockquote>\n\n**Downloaded By-**{CR}\n'
+                    cczip = f'.𖥔 ݁ ˖Zip Id.𖥔 ݁ ˖ : {str(count).zfill(3)}\n\n**Title :** {v_name}\n\n<blockquote><b>✘ Course : {b_name}</b></blockquote>\n<blockquote><b>✎ᝰ.Topic : {t_name}</b></blockquote>\n\n**Downloaded By-**{CR}\n'
+                    ccimg = f'.𖥔 ݁ ˖Img Id.𖥔 ݁ ˖ : {str(count).zfill(3)}\n\n**Title :** {v_name}\n\n<blockquote><b>✘ Course : {b_name}</b></blockquote>\n<blockquote><b>✎ᝰ.Topic : {t_name}</b></blockquote>\n\n**Downloaded By-**{CR}\n'
+                    cchtml = f'.𖥔 ݁ ˖Html Id.𖥔 ݁ ˖ : {str(count).zfill(3)}\n\n**Title :** {v_name}\n\n<blockquote><b>✘ Course : {b_name}</b></blockquote>\n<blockquote><b>✎ᝰ.Topic : {t_name}</b></blockquote>\n\n**Downloaded By-**{CR}\n'
+                    ccyt = f'.𖥔 ݁ ˖Vid Id.𖥔 ݁ ˖ : {str(count).zfill(3)}\n\n**Title :** {v_name}\n\n<a href="{url}">__**Click Here to Watch Stream**__</a>\n<blockquote><b>✘ Course : {b_name}</b></blockquote>\n<blockquote><b>✎ᝰ.Topic : {t_name}</b></blockquote>\n\n**Downloaded By-**{CR}\n'
+                    ccm = f'.𖥔 ݁ ˖Mp3 Id.𖥔 ݁ ˖ : {str(count).zfill(3)}\n\n**Title :** {v_name}\n\n<blockquote><b>✘ Course : {b_name}</b></blockquote>\n<blockquote><b>✎ᝰ.Topic : {t_name}</b></blockquote>\n\n**Downloaded By-**{CR}\n'
                 else:
-                    cc = f'✮vid Id : {str(count).zfill(3)}\n\n**Title :** {name1} \n\n<blockquote><b> 💠 Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
-                cc1 = f'✮Pdf Id : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b> 💠 Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
-                cczip = f'✮Zip Id : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b> 💠 Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n' 
-                ccimg = f'✮Img Id : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b> 💠 Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
-                ccm = f'✮Audio Id : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b> 💠 Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
-                cchtml = f'✮Html Id : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b> 💠 Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
+                    cc = f'.𖥔 ݁ ˖Vid Id.𖥔 ݁ ˖ : {str(count).zfill(3)}\n\n**Title :** {name1} \n\n<blockquote><b>✘ Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
+                cc1 = f'.𖥔 ݁ ˖Pdf Id.𖥔 ݁ ˖ : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b>✘ Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
+                cczip = f'.𖥔 ݁ ˖Zip Id.𖥔 ݁ ˖ : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b> ✘ Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n' 
+                ccimg = f'.𖥔 ݁ ˖Img Id.𖥔 ݁ ˖ : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b>✘ Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
+                ccm = f'.𖥔 ݁ ˖Audio Id.𖥔 ݁ ˖ : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b>✘  Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
+                cchtml = f'.𖥔 ݁ ˖Html Id.𖥔 ݁ ˖ : {str(count).zfill(3)}\n\n**Title :** {name1}\n\n<blockquote><b>✘ Course :</b> {b_name}</blockquote>\n\n**Downloaded By-**{CR}\n'
     
                 if "drive" in url:
                     try:

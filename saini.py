@@ -21,10 +21,17 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from base64 import b64decode
 
+# =============================================================================
+# Tunables (can also be overridden with env vars)
+# =============================================================================
+PARALLEL_CONNECTIONS = int(os.getenv("DL_CONNECTIONS", 8))   # simultaneous HTTP range requests
+PART_SIZE_MB          = int(os.getenv("DL_PART_MB", 4))      # each part size in MB (range length)
+PART_SIZE             = 1024 * 1024 * PART_SIZE_MB
+
 # ⚡ Speed Patch for Pyrogram uploads
 try:
     import pyrogram
-    # Force chunk size to 1 MB (default = 256 KB)
+    # Force upload chunk size to 4 MB (default in pyrogram is 256 KB)
     if hasattr(pyrogram.client, "DEFAULT_CHUNK_SIZE"):
         pyrogram.client.DEFAULT_CHUNK_SIZE = 1024 * 1024 * 4
         print(f"[Patch] Pyrogram upload chunk size set to {pyrogram.client.DEFAULT_CHUNK_SIZE // 1024} KB")
@@ -32,9 +39,14 @@ except Exception as e:
     print(f"[Patch] Could not patch Pyrogram chunk size: {e}")
 
 
+# =============================================================================
+# Utilities
+# =============================================================================
+
 def duration(filename):
     result = subprocess.run(
-        ["ffprobe", "-v", "error", "-show_entries", "format=duration", "-of", "default=noprint_wrappers=1:nokey=1", filename],
+        ["ffprobe", "-v", "error", "-show_entries", "format=duration",
+         "-of", "default=noprint_wrappers=1:nokey=1", filename],
         stdout=subprocess.PIPE,
         stderr=subprocess.STDOUT
     )
@@ -59,7 +71,7 @@ def exec(cmd):
 def pull_run(work, cmds):
     with concurrent.futures.ThreadPoolExecutor(max_workers=work) as executor:
         print("Waiting for tasks to complete")
-        fut = executor.map(exec, cmds)
+        _ = executor.map(exec, cmds)
 
 
 async def aio(url, name):
@@ -84,8 +96,11 @@ async def download(url, name):
                 return ka
 
 
-# ⚡ Increased chunk size for speed
-async def pdf_download(url, file_name, chunk_size=1024 * 1024 * 8):
+# =============================================================================
+# High-speed parallel range downloader
+# Falls back to single-stream if server doesn't support ranges.
+# =============================================================================
+async def _single_stream_download(url: str, file_name: str, chunk_size: int = PART_SIZE):
     if os.path.exists(file_name):
         os.remove(file_name)
     r = requests.get(url, allow_redirects=True, stream=True, timeout=(10, 300))
@@ -94,6 +109,67 @@ async def pdf_download(url, file_name, chunk_size=1024 * 1024 * 8):
             if chunk:
                 fd.write(chunk)
     return file_name
+
+
+async def _parallel_range_download(url: str, file_name: str,
+                                   connections: int = PARALLEL_CONNECTIONS,
+                                   part_size: int = PART_SIZE):
+    # discover file size & range support
+    async with aiohttp.ClientSession() as session:
+        try:
+            async with session.head(url) as head:
+                size = int(head.headers.get("Content-Length", "0"))
+                accept_ranges = head.headers.get("Accept-Ranges", "")
+        except Exception:
+            size, accept_ranges = 0, ""
+
+        # If HEAD didn't help, try a small GET
+        if size == 0:
+            async with session.get(url) as resp:
+                size = int(resp.headers.get("Content-Length", "0"))
+                accept_ranges = resp.headers.get("Accept-Ranges", accept_ranges)
+
+        # Fallback if no size or no byte ranges
+        if size <= 0 or "bytes" not in accept_ranges.lower():
+            return await _single_stream_download(url, file_name, chunk_size=part_size)
+
+        # Pre-create file with total size
+        if os.path.exists(file_name):
+            os.remove(file_name)
+        with open(file_name, "wb") as f:
+            f.truncate(size)
+
+        # Build ranges
+        ranges = [(start, min(start + part_size - 1, size - 1))
+                  for start in range(0, size, part_size)]
+
+        sem = asyncio.Semaphore(connections)
+
+        async def fetch_and_write(idx: int, start: int, end: int):
+            headers = {"Range": f"bytes={start}-{end}"}
+            async with sem:
+                async with session.get(url, headers=headers) as resp:
+                    # write directly to correct offset
+                    offset = start
+                    async for chunk in resp.content.iter_chunked(1024 * 256):
+                        if not chunk:
+                            continue
+                        # each task opens its own handle & writes to offset
+                        with open(file_name, "r+b") as fp:
+                            fp.seek(offset)
+                            fp.write(chunk)
+                        offset += len(chunk)
+
+        await asyncio.gather(*[
+            fetch_and_write(i, s, e) for i, (s, e) in enumerate(ranges)
+        ])
+
+    return file_name
+
+
+# Public wrappers used by the rest of the code (names unchanged)
+async def pdf_download(url, file_name, chunk_size: int = PART_SIZE):
+    return await _parallel_range_download(url, file_name, PARALLEL_CONNECTIONS, PART_SIZE)
 
 
 def parse_vid_info(info):
@@ -111,7 +187,7 @@ def parse_vid_info(info):
                 if "RESOLUTION" not in i[2] and i[2] not in temp and "audio" not in i[2]:
                     temp.append(i[2])
                     new_info.append((i[0], i[2]))
-            except:
+            except Exception:
                 pass
     return new_info
 
@@ -131,7 +207,7 @@ def vid_info(info):
                 if "RESOLUTION" not in i[2] and i[2] not in temp and "audio" not in i[2]:
                     temp.append(i[2])
                     new_info.update({f'{i[2]}': f'{i[0]}'})
-            except:
+            except Exception:
                 pass
     return new_info
 
@@ -141,7 +217,12 @@ async def decrypt_and_merge_video(mpd_url, keys_string, output_path, output_name
         output_path = Path(output_path)
         output_path.mkdir(parents=True, exist_ok=True)
 
-        cmd1 = f'yt-dlp -f "bv[height<={quality}]+ba/b" -o "{output_path}/file.%(ext)s" --allow-unplayable-format --no-check-certificate --external-downloader aria2c "{mpd_url}"'
+        cmd1 = (
+            f'yt-dlp -f "bv[height<={quality}]+ba/b" '
+            f'-o "{output_path}/file.%(ext)s" '
+            f'--allow-unplayable-format --no-check-certificate '
+            f'--external-downloader aria2c "{mpd_url}"'
+        )
         print(f"Running command: {cmd1}")
         os.system(cmd1)
 
@@ -208,16 +289,19 @@ async def run(cmd):
         return f'[stderr]\n{stderr.decode()}'
 
 
-# ⚡ Increased chunk size for old_download too
-def old_download(url, file_name, chunk_size=1024 * 1024 * 8):
-    if os.path.exists(file_name):
-        os.remove(file_name)
-    r = requests.get(url, allow_redirects=True, stream=True, timeout=(10, 300))
-    with open(file_name, 'wb') as fd:
-        for chunk in r.iter_content(chunk_size=chunk_size):
-            if chunk:
-                fd.write(chunk)
-    return file_name
+# Legacy wrapper kept for compatibility; now uses the fast parallel downloader
+def old_download(url, file_name, chunk_size: int = PART_SIZE):
+    # Run the async downloader from a sync context if needed
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = None
+
+    if loop and loop.is_running():
+        # schedule a task the caller can await; for strict sync callers, fallback
+        return asyncio.ensure_future(_parallel_range_download(url, file_name, PARALLEL_CONNECTIONS, PART_SIZE))
+    else:
+        return asyncio.run(_parallel_range_download(url, file_name, PARALLEL_CONNECTIONS, PART_SIZE))
 
 
 def human_readable_size(size, decimal_places=2):
@@ -236,16 +320,22 @@ def time_name():
 
 
 async def download_video(url, cmd, name):
-    download_cmd = f'{cmd} -R 25 --fragment-retries 25 --external-downloader aria2c --downloader-args "aria2c: -x 16 -j 32"'
+    download_cmd = (
+        f'{cmd} -R 25 --fragment-retries 25 '
+        f'--external-downloader aria2c '
+        f'--downloader-args "aria2c: -x 16 -j 32"'
+    )
     global failed_counter
     print(download_cmd)
     logging.info(download_cmd)
     k = subprocess.run(download_cmd, shell=True)
+
     if "visionias" in cmd and k.returncode != 0 and failed_counter <= 10:
         failed_counter += 1
         await asyncio.sleep(5)
         await download_video(url, cmd, name)
     failed_counter = 0
+
     try:
         if os.path.isfile(name):
             return name
@@ -259,11 +349,13 @@ async def download_video(url, cmd, name):
         elif os.path.isfile(f"{name}.mp4.webm"):
             return f"{name}.mp4.webm"
         return name
-    except FileNotFoundError as exc:
+    except FileNotFoundError:
         return os.path.isfile.splitext[0] + "." + "mp4"
 
 
-# ⚡ Removed long sleeps in send_doc
+# =============================================================================
+# Senders
+# =============================================================================
 async def send_doc(bot: Client, m: Message, cc, ka, cc1, prog, count, name, channel_id):
     reply = await bot.send_message(channel_id, f"Downloading pdf:\n`{name}`")
     await asyncio.sleep(0.2)

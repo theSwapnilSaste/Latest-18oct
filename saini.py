@@ -26,7 +26,7 @@ try:
     import pyrogram
     # Force chunk size to 1 MB (default = 256 KB)
     if hasattr(pyrogram.client, "DEFAULT_CHUNK_SIZE"):
-        pyrogram.client.DEFAULT_CHUNK_SIZE = 1024 * 1024
+        pyrogram.client.DEFAULT_CHUNK_SIZE = 1024 * 1024 * 4
         print(f"[Patch] Pyrogram upload chunk size set to {pyrogram.client.DEFAULT_CHUNK_SIZE // 1024} KB")
 except Exception as e:
     print(f"[Patch] Could not patch Pyrogram chunk size: {e}")
@@ -85,7 +85,7 @@ async def download(url, name):
 
 
 # ⚡ Increased chunk size for speed
-async def pdf_download(url, file_name, chunk_size=1024 * 1024 * 4):
+async def pdf_download(url, file_name, chunk_size=1024 * 1024 * 8):
     if os.path.exists(file_name):
         os.remove(file_name)
     r = requests.get(url, allow_redirects=True, stream=True, timeout=(10, 300))
@@ -209,7 +209,7 @@ async def run(cmd):
 
 
 # ⚡ Increased chunk size for old_download too
-def old_download(url, file_name, chunk_size=1024 * 1024 * 4):
+def old_download(url, file_name, chunk_size=1024 * 1024 * 8):
     if os.path.exists(file_name):
         os.remove(file_name)
     r = requests.get(url, allow_redirects=True, stream=True, timeout=(10, 300))

@@ -21,6 +21,17 @@ from Crypto.Cipher import AES
 from Crypto.Util.Padding import unpad
 from base64 import b64decode
 
+# ========= ⚡ Speed Patch for Pyrogram =========
+import pyrogram
+from pyrogram.file_id import DEFAULT_CHUNK_SIZE
+
+# Force chunk size to 1 MB instead of default 256 KB
+pyrogram.file_id.DEFAULT_CHUNK_SIZE = 1024 * 1024  
+
+print(f"[Patch] Pyrogram upload chunk size set to {pyrogram.file_id.DEFAULT_CHUNK_SIZE // 1024} KB")
+# ==============================================
+
+
 def duration(filename):
     result = subprocess.run(["ffprobe", "-v", "error", "-show_entries",
                              "format=duration", "-of",

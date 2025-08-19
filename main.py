@@ -67,7 +67,7 @@ image_urls = [
     "https://graph.org/file/5576eb0335b38e8844f74-3a7ec7f073ab4c93a3.jpg",
     "https://graph.org/file/bc1078c7878a6bccea2a2-c73e0429156f5714e5.jpg",
     "https://graph.org/file/53e77ec2bb399b4fe2976-0234fc7f73d0a2f951.jpg",
-    "https://graph.org/file/4dfb462cb15fe91d18046-21a195f429b6e1226f.jpg",
+    "https://graph.org/file/4dfb462cb15fe91d18046-21a195f429b6e1226f.jpg"
 ]
 
 # Inline keyboard for start command

@@ -63,12 +63,11 @@ photozip = 'https://envs.sh/cD_.jpg'
 
 # Random image URLs for start command
 image_urls = [
-    "https://tinypic.host/images/2025/02/07/IMG_20250207_224444_975.jpg",
-    "https://tinypic.host/images/2025/02/07/DeWatermark.ai_1738952933236-1.png",
-    "https://envs.sh/GVI.jpg",
-    "https://graph.org/file/734713c9cba1c73ac3518-9be4248ab71475d122.jpg",
-    "https://tinypic.host/images/2025/07/14/file_00000000fc2461fbbdd6bc500cecbff8_conversation_id6874702c-9760-800e-b0bf-8e0bcf8a3833message_id964012ce-7ef5-4ad4-88e0-1c41ed240c03-1-1.jpg",
-    "https://tinypic.host/images/2025/07/14/file_000000002d44622f856a002a219cf27aconversation_id68747543-56d8-800e-ae47-bb6438a09851message_id8e8cbfb5-ea6c-4f59-974a-43bdf87130c0.png"
+    "https://graph.org/file/f26ece1fe2739a6206912-3c839594eba07dc2d2.jpg",
+    "https://graph.org/file/5576eb0335b38e8844f74-3a7ec7f073ab4c93a3.jpg",
+    "https://graph.org/file/bc1078c7878a6bccea2a2-c73e0429156f5714e5.jpg",
+    "https://graph.org/file/53e77ec2bb399b4fe2976-0234fc7f73d0a2f951.jpg",
+    "https://graph.org/file/4dfb462cb15fe91d18046-21a195f429b6e1226f.jpg",
 ]
 
 # Inline keyboard for start command

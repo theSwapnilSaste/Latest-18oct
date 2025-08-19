@@ -472,11 +472,11 @@ async def start(bot, m: Message):
     # Select a random image
     random_image = random.choice(image_urls)
     
-    caption = "➦K Haal h 😁❤️\n\n• ι ᥲm txt to vιdᥱo υρᥣoᥲdᥱr bot.\n\n• for υpload sᥱᥒd /mars\n\n• for gυιdᥱ sᥱᥒd /help"
+    caption = "➦Kaise Ho😉❤️\n\n• ι ᥲm txt to vιdᥱo υρᥣoᥲdᥱr bot.\n\n• for υpload sᥱᥒd /mars\n\n• for gυιdᥱ sᥱᥒd /help"
     
     keyboard = InlineKeyboardMarkup([
-        [InlineKeyboardButton(text="📞 Contact", url="https://t.me/saini_contact_bot"), 
-         InlineKeyboardButton(text="🛠️ Repo", url="https://github.com/nikhilsainiop/saini-txt-direct")]
+        [InlineKeyboardButton(text="✉️ Need Help ??", url="https://t.me/Marshcontactxbot"), 
+         InlineKeyboardButton(text="👦🏻 visit My channel", url="https://t.me/smalldeveloperkane")]
     ])
     
     await bot.send_photo(
@@ -637,22 +637,7 @@ async def txt_handler(bot: Client, m: Message):
         else: 
             res = "UN"
     except Exception:
-            res = "UN"
-
-    await editable.edit(f"**Enter the Credit Name or send /d\n\n<blockquote><b>Format:</b>\n🔹Send __Admin__ only for caption\n🔹Send __Admin,filename__ for caption and file...Separate them with a comma (,)</blockquote>**")
-    try:
-        input3: Message = await bot.listen(editable.chat.id, timeout=20)
-        raw_text3 = input3.text
-        await input3.delete(True)
-    except asyncio.TimeoutError:
-        raw_text3 = '/d'
-        
-    if raw_text3 == '/d':
-        CR = f"{CREDIT}"
-    elif "," in raw_text3:
-        CR, PRENAME = raw_text3.split(",")
-    else:
-        CR = raw_text3
+            res = "UN"    
 
     await editable.edit("**Enter 𝐏𝐖/𝐂𝐖/𝐂𝐏 Working Token For 𝐌𝐏𝐃 𝐔𝐑𝐋 or send /d**\n\n<blockquote><b>Note: If you are downloading Classplus Video, Make sure you joined @bots_updatee this channel.</b></blockquote>")
     try:

@@ -1,4 +1,3 @@
-
 import os
 import re
 import sys
@@ -78,40 +77,6 @@ keyboard = InlineKeyboardMarkup(
         [InlineKeyboardButton(text="📞 Contact", url="https://t.me/saini_contact_bot"), InlineKeyboardButton(text="🛠️ Repo", url="https://github.com/nikhilsainiop/saini-txt-direct")],
     ]
 )
-
-# Help command handler
-@bot.on_message(filters.command(["help", "h"]))
-async def help_command(bot, m: Message):
-    help_text = """
-🤖 **Bot Help Guide** 📚
-
-✨ **Main Commands:**
-• /start - Check bot status
-• /help - Show this help message
-• /mars - Process .txt files
-• /cookies - Upload YouTube cookies
-• /y2t - YouTube → .txt converter
-• /ytm - YouTube → MP3 downloader
-• /t2t - Text → .txt generator
-
-⚡ **Utility Commands:**
-• /stop - Stop current process
-• /id - Get your Telegram ID
-• /info - Account information
-• /logs - View bot activity
-
-👑 **Admin Commands:**
-• /broadcast - Message all users
-• /reset - Reset the bot
-• /addauth - Add authorized user
-• /rmauth - Remove authorized user
-• /users - List authorized users
-
-📞 **Support:** @saini_contact_bot
-🌟 **Channel:** @smalldeveloperkane
-    """
-    
-    await m.reply_text(help_text, disable_web_page_preview=True)
 
 @bot.on_message(filters.command("addauth") & filters.private)
 async def add_auth_user(client: Client, message: Message):
@@ -500,30 +465,26 @@ async def cancel_handler(client: Client, m: Message):
 
 @bot.on_message(filters.command("start"))
 async def start(bot, m: Message):
-    try:
-        user_id = m.chat.id
-        if user_id not in TOTAL_USERS:
-            TOTAL_USERS.append(user_id)
-        
-        # Select a random image
-        random_image = random.choice(image_urls)
-        
-        caption = "➦Kaise Ho😉❤️\n\n• ι ᥲm txt to vιdᥱo υρᥣoᥲdᥱr bot.\n\n• for υpload sᥱᥒd /mars\n\n• for gυιdᥱ sᥱᥒd /help"
-        
-        keyboard = InlineKeyboardMarkup([
-            [InlineKeyboardButton(text="✉️ Need Help ??", url="https://t.me/Marshcontactxbot"), 
-             InlineKeyboardButton(text="👦🏻 visit My channel", url="https://t.me/smalldeveloperkane")]
-        ])
-        
-        await bot.send_photo(
-            chat_id=m.chat.id,
-            photo=random_image,
-            caption=caption,
-            reply_markup=keyboard
-        )
-    except Exception as e:
-        logging.error(f"Start command error: {e}")
-        await m.reply_text("❌ Error processing start command. Please try again.")
+    user_id = m.chat.id
+    if user_id not in TOTAL_USERS:
+        TOTAL_USERS.append(user_id)
+    
+    # Select a random image
+    random_image = random.choice(image_urls)
+    
+    caption = "➦Kaise Ho😉❤️\n\n• ι ᥲm txt to vιdᥱo υρᥣoᥲdᥱr bot.\n\n• for υpload sᥱᥒd /mars\n\n• for gυιdᥱ sᥱᥒd /help"
+    
+    keyboard = InlineKeyboardMarkup([
+        [InlineKeyboardButton(text="✉️ Need Help ??", url="https://t.me/Marshcontactxbot"), 
+         InlineKeyboardButton(text="👦🏻 visit My channel", url="https://t.me/smalldeveloperkane")]
+    ])
+    
+    await bot.send_photo(
+        chat_id=m.chat.id,
+        photo=random_image,
+        caption=caption,
+        reply_markup=keyboard
+    )
 
 @bot.on_message(filters.command(["id"]))
 async def id_command(client, message: Message):
@@ -1009,7 +970,7 @@ async def txt_handler(bot: Client, m: Message):
                     progress = (count / len(links)) * 100
                     Show1 = f"<blockquote>🚀𝐏𝐫𝐨𝐠𝐫𝐞𝐬𝐬 » {progress:.2f}%</blockquote>\n┃\n" \
                            f"┣🏹𝐈𝐧𝐝𝐞𝐱 » {count}/{len(links)}\n┃\n" \
-                           f"╰━⚡𝐑𝐞𝐦𝐎𝐚𝐢𝐧 » {remaining_links}\n" \
+                           f"╰━⚡𝐑𝐞𝐦𝐚𝐢𝐧 » {remaining_links}\n" \
                            f"━━━━━━━━━━━━━━━━━━━━━━━━\n" \
                            f"╰━🕊️𝐁𝐨𝐭 𝐌𝐚𝐝𝐞 𝐁𝐲  {CREDIT}"
                     Show = f"<i><b>Video Downloading</b></i>\n<blockquote><b>{str(count).zfill(3)}) {name1}</b></blockquote>"
@@ -1040,9 +1001,8 @@ async def txt_handler(bot: Client, m: Message):
     else:
         await bot.send_message(channel_id, f"<blockquote><b>🔅Successfully Done💞</b></blockquote>\n<blockquote><b>🔰Course : {b_name}</b></blockquote>\n<blockquote>🔗 Total Links: {len(links)} \n 🔸 Total Video : {video_count}\n  🔸 Total PDF : {pdf_count}\n</blockquote>\n")
         await bot.send_message(m.chat.id, f"<blockquote><b>✅ Your Task is completed, please check your Set Channel📱</b></blockquote>")
-
-# Text handler that excludes commands (must be placed AFTER all command handlers)
-@bot.on_message(filters.text & filters.private & ~filters.command)
+        
+@bot.on_message(filters.text & filters.private)
 async def text_handler(bot: Client, m: Message):
     if m.from_user.is_bot:
         return

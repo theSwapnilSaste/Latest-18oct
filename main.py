@@ -528,7 +528,7 @@ async def send_logs(client: Client, m: Message):
     except Exception as e:
         await m.reply_text(f"**Error sending logs:**\n<blockquote>{e}</blockquote>")
 
-@bot.on_message(filters.command(["mars"]) )
+@bot.on_message(filters.command(["/knight"]) )
 async def txt_handler(bot: Client, m: Message):  
     global processing_request, cancel_requested, cancel_message
     processing_request = True
@@ -1284,22 +1284,22 @@ def reset_and_set_commands():
     requests.post(url, json={"commands": []})
     # Set new
     commands = [
-        {"command": "start", "description": "✅ Check Alive the Bot"},
-        {"command": "stop", "description": "🚫 Stop the ongoing process"},
-        {"command": "broadcast", "description": "📢 Broadcast to All Users"},
-        {"command": "broadusers", "description": "👨‍❤️‍👨 All Broadcasting Users"},
-        {"command": "mars", "description": "📑 Upload .txt file"},
-        {"command": "cookies", "description": "📁 Upload YT Cookies"},
-        {"command": "y2t", "description": "🔪 YouTube → .txt Converter"},
-        {"command": "ytm", "description": "🎶 YouTube → .mp3 downloader"},
-        {"command": "t2t", "description": "📟 Text → .txt Generator"},
-        {"command": "reset", "description": "✅ Reset the Bot"},
+        {"command": "start", "description": " Check Alive the Bot"},
+        {"command": "stop", "description": " Stop the ongoing process"},
+        {"command": "broadcast", "description": " Broadcast to All Users"},
+        {"command": "broadusers", "description": " All Broadcasting Users"},
+        {"command": "mars", "description": " Upload .txt file"},
+        {"command": "cookies", "description": " Upload YT Cookies"},
+        {"command": "y2t", "description": "YouTube → .txt Converter"},
+        {"command": "ytm", "description": " YouTube → .mp3 downloader"},
+        {"command": "t2t", "description": " Text → .txt Generator"},
+        {"command": "reset", "description": " Reset the Bot"},
         {"command": "id", "description": "🆔 Get Your ID"},
-        {"command": "info", "description": "ℹ️ Check Your Information"},
-        {"command": "logs", "description": "👁️ View Bot Activity"},
-        {"command": "addauth", "description": "▶️ Add Authorisation"},
-        {"command": "rmauth", "description": "⏸️ Remove Authorisation "},
-        {"command": "users", "description": "👨‍👨‍👧‍👦 All Premium Users"}
+        {"command": "info", "description": " Check Your Information"},
+        {"command": "logs", "description": " View Bot Activity"},
+        {"command": "addauth", "description": " Add Authorisation"},
+        {"command": "rmauth", "description": " Remove Authorisation "},
+        {"command": "users", "description": " All Premium Users"}
     ]
     requests.post(url, json={"commands": commands})
 

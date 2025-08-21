@@ -63,18 +63,19 @@ photozip = 'https://envs.sh/cD_.jpg'
 
 # Random image URLs for start command
 image_urls = [
-    "https://graph.org/file/f26ece1fe2739a6206912-3c839594eba07dc2d2.jpg",
-    "https://graph.org/file/5576eb0335b38e8844f74-3a7ec7f073ab4c93a3.jpg",
+    "https://graph.org/file/90f1fb62abf308454df3a-9555961c6ba5b76b78.jpg",
+    "https://graph.org/file/081cad0b5bb85cf2f15a5-624c0a8c37403e2ec5.jpg",
     "https://graph.org/file/bc1078c7878a6bccea2a2-c73e0429156f5714e5.jpg",
-    "https://graph.org/file/53e77ec2bb399b4fe2976-0234fc7f73d0a2f951.jpg",
-    "https://graph.org/file/4dfb462cb15fe91d18046-21a195f429b6e1226f.jpg"
+    "https://graph.org/file/42b61a43dee10e4309473-830788c83468ea6596.jpg",
+    "https://graph.org/file/639cd58bff9d2a479cc8c-40d953e29c1d76de17.jpg",
+    "https://graph.org/file/0a72e001ece95c4cc7867-a9ec2f628aecd41cb6.jpg"
 ]
 
 # Inline keyboard for start command
 BUTTONSCONTACT = InlineKeyboardMarkup([[InlineKeyboardButton(text="📞 Contact", url="https://t.me/saini_contact_bot")]])
 keyboard = InlineKeyboardMarkup(
     [
-        [InlineKeyboardButton(text="📞 Contact", url="https://t.me/saini_contact_bot"), InlineKeyboardButton(text="🛠️ Repo", url="https://github.com/nikhilsainiop/saini-txt-direct")],
+        [InlineKeyboardButton(text="✉️ Need Help ??", url="https://t.me/Marshcontactxbot"), InlineKeyboardButton(text="👦🏻 visit My channel", url="https://t.me/smalldeveloperkane")],
     ]
 )
 
@@ -382,7 +383,7 @@ async def txt_handler(bot: Client, m: Message):
     try:
         for i in range(arg-1, len(links)):
             if cancel_requested:
-                await m.reply_text("🚦**STOPPED**🚦")
+                await m.reply_text("**STOPPED Baby🐥**")
                 processing_request = False
                 cancel_requested = False
                 return
@@ -472,7 +473,7 @@ async def start(bot, m: Message):
     # Select a random image
     random_image = random.choice(image_urls)
     
-    caption = "➦Kaise Ho😉❤️\n\n• ι ᥲm txt to vιdᥱo υρᥣoᥲdᥱr bot.\n\n• for υpload sᥱᥒd /mars\n\n• for gυιdᥱ sᥱᥒd /help"
+    caption = "➦Welcome 😉❤️\n\n• ι ᥲm txt to vιdᥱo υρᥣoᥲdᥱr bot.\n\n• for υpload sᥱᥒd /mars\n\n• for Ur InFo. /info"
     
     keyboard = InlineKeyboardMarkup([
         [InlineKeyboardButton(text="✉️ Need Help ??", url="https://t.me/Marshcontactxbot"), 
